@@ -82,3 +82,23 @@ def import_yaml(file_path):
         return data
     except Exception as e:
         raise ValueError(f"An error occurred while reading the YAML file: {e}")
+
+def import_text(file_path):
+    """
+    Imports a text file and returns its content as a string.
+    
+    Parameters:
+    file_path (str): The path to the text file.
+    
+    Returns:
+    str: The content of the text file.
+    """
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"The file {file_path} does not exist.")
+
+    try:
+        with open(file_path, 'r') as file:
+            content = file.read()
+        return content
+    except Exception as e:
+        raise ValueError(f"An error occurred while reading the text file: {e}")
