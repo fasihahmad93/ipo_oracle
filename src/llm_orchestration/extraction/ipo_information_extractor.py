@@ -5,10 +5,7 @@ from .ipo_extraction_prompt import (
     create_ipo_information_extraction_prompt,
 )
 from .ollama_llm_client import OllamaLanguageModelClient
-# from .ipo_data_validator import (
-#     validate_and_normalize_ipo_information,
-# )
-from configuration import MAX_WEBPAGE_CONTENT_LENGTH
+from llm_orchestration.configuration import MAX_WEBPAGE_CONTENT_LENGTH
 
 logger = logging.getLogger(__name__)
 

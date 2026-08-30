@@ -2,8 +2,8 @@ import logging
 
 from crawl4ai import AsyncWebCrawler
 
-from crawler import crawl_single_webpage
-from search import search_web_for_pages
+from web_crawling.crawler import crawl_single_webpage
+from web_crawling.search import search_web_for_pages
 
 logger = logging.getLogger(__name__)
 

@@ -2,7 +2,7 @@ import logging
 
 from ddgs import DDGS
 
-from models import SearchResult
+from web_crawling.models import SearchResult
 
 logger = logging.getLogger(__name__)
 

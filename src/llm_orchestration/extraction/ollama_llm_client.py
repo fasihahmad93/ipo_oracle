@@ -2,7 +2,7 @@ import logging
 
 import requests
 
-from configuration import (
+from llm_orchestration.configuration import (
     OLLAMA_MODEL_NAME,
     OLLAMA_REQUEST_TIMEOUT_SECONDS,
     OLLAMA_SERVER_URL,

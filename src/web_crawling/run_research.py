@@ -2,12 +2,18 @@ import asyncio
 import json
 import logging
 import re
+import sys
 from dataclasses import asdict
 from pathlib import Path
 
 import yaml
 
-from research import search_and_crawl_webpages
+# Add src directory to path for absolute imports
+SRC_ROOT = Path(__file__).resolve().parents[1]
+if str(SRC_ROOT) not in sys.path:
+    sys.path.insert(0, str(SRC_ROOT))
+
+from web_crawling.research import search_and_crawl_webpages
 
 logger = logging.getLogger(__name__)
 
