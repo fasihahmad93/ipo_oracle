@@ -1,9 +1,18 @@
 import asyncio
 import logging
 
-from web_crawling.run_research import load_research_input_configuration, run_research_workflow
-from llm_orchestration.run_llm_orchestration import run_ipo_information_extraction_pipeline
-from consolidated_report.run_generate_report import run_consolidated_report_generation_pipeline
+from src.web_crawling.run_research import (
+    run_research_workflow,
+)
+
+from src.llm_orchestration.run_llm_orchestration import (
+    run_ipo_information_extraction_pipeline,
+)
+
+from src.consolidated_report.report_generator import (
+    generate_consolidated_report,
+)
+
 
 logger = logging.getLogger(__name__)
 
@@ -11,15 +20,17 @@ logger = logging.getLogger(__name__)
 async def run_ipo_research_pipeline(
     search_term: str,
     maximum_search_result_count: int = 5,
-):
+) -> str:
     """
     Run the complete IPO research pipeline.
 
     Pipeline:
-        1. Search the web for relevant IPO GMP pages.
-        2. Crawl the discovered webpages.
-        3. Extract IPO information using the LLM.
-        4. Consolidate the extracted information into a final report.
+        1. Search and crawl relevant IPO webpages.
+        2. Extract IPO information using the LLM.
+        3. Consolidate the extracted information into a final report.
+
+    Returns:
+        The final consolidated IPO report as text.
     """
 
     logger.info(
@@ -28,109 +39,51 @@ async def run_ipo_research_pipeline(
     )
 
     # ---------------------------------------------------------
-    # Step 1: Search for relevant webpages
+    # Step 1: Web crawling
     # ---------------------------------------------------------
 
-    logger.info("Step 1/4: Searching the web")
+    logger.info(
+        "Step 1/3: Starting web research"
+    )
 
-    search_results = search_web_for_pages(
+    research_output_file = await run_research_workflow(
         search_term=search_term,
-        maximum_result_count=maximum_search_result_count,
+        maximum_search_result_count=maximum_search_result_count,
     )
 
     logger.info(
-        "Found %d potentially relevant webpages",
-        len(search_results),
+        "Web research completed successfully: %s",
+        research_output_file,
     )
 
-    if not search_results:
-        logger.warning(
-            "No webpages found for search term: %r",
-            search_term,
-        )
-        return None
-
     # ---------------------------------------------------------
-    # Step 2: Crawl webpages
-    # ---------------------------------------------------------
-
-    logger.info("Step 2/4: Crawling webpages")
-
-    crawled_webpages = await crawl_webpages(
-        search_results
-    )
-
-    logger.info(
-        "Successfully crawled %d webpages",
-        len(crawled_webpages),
-    )
-
-    if not crawled_webpages:
-        logger.warning(
-            "No webpages were successfully crawled"
-        )
-        return None
-
-    # ---------------------------------------------------------
-    # Step 3: Extract IPO information
+    # Step 2: LLM extraction
     # ---------------------------------------------------------
 
     logger.info(
-        "Step 3/4: Extracting IPO information"
+        "Step 2/3: Starting IPO information extraction"
     )
 
-    extracted_ipo_records = []
-
-    for webpage_number, crawled_webpage in enumerate(
-        crawled_webpages,
-        start=1,
-    ):
-
-        logger.info(
-            "Extracting IPO information from webpage %d/%d: %s",
-            webpage_number,
-            len(crawled_webpages),
-            crawled_webpage.url,
-        )
-
-        try:
-
-            ipo_record = await extract_ipo_information(
-                crawled_webpage
-            )
-
-            if ipo_record:
-                extracted_ipo_records.append(
-                    ipo_record
-                )
-
-        except Exception:
-            logger.exception(
-                "Failed to extract IPO information from %s",
-                crawled_webpage.url,
-            )
+    ipo_information_text = (
+        run_ipo_information_extraction_pipeline()
+    )
 
     logger.info(
-        "Successfully extracted IPO information from %d webpages",
-        len(extracted_ipo_records),
+        "IPO information extraction completed"
     )
 
-    if not extracted_ipo_records:
-        logger.warning(
-            "No IPO information was extracted"
-        )
-        return None
-
     # ---------------------------------------------------------
-    # Step 4: Consolidate information
+    # Step 3: Consolidation
     # ---------------------------------------------------------
 
     logger.info(
-        "Step 4/4: Consolidating IPO information"
+        "Step 3/3: Starting report consolidation"
     )
 
-    final_ipo_report = consolidate_ipo_information(
-        extracted_ipo_records
+    final_ipo_report = generate_consolidated_report()
+
+    logger.info(
+        "IPO report consolidation completed"
     )
 
     logger.info(
@@ -140,7 +93,7 @@ async def run_ipo_research_pipeline(
     return final_ipo_report
 
 
-def main():
+def main() -> None:
     """
     Application entry point.
     """
@@ -164,11 +117,11 @@ def main():
         )
     )
 
-    if final_ipo_report is None:
-        print("No IPO information found.")
-        return
-
-    print("\n")
+    print()
+    print("=" * 80)
+    print("FINAL IPO REPORT")
+    print("=" * 80)
+    print()
     print(final_ipo_report)
 
 
