@@ -13,6 +13,8 @@ from src.consolidated_report.report_generator import (
     generate_consolidated_report,
 )
 
+from src.cli.banner import display_cli_banner
+
 
 logger = logging.getLogger(__name__)
 
@@ -98,6 +100,8 @@ def main() -> None:
     Application entry point.
     """
 
+    display_cli_banner()
+    
     logging.basicConfig(
         level=logging.INFO,
         format=(
