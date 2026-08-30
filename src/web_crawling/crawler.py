@@ -2,7 +2,7 @@ import logging
 
 from crawl4ai import AsyncWebCrawler
 
-from models import CrawledPage
+from src.web_crawling.models import CrawledPage
 
 logger = logging.getLogger(__name__)
 

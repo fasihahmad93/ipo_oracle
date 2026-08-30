@@ -8,7 +8,7 @@ from .ollama_llm_client import OllamaLanguageModelClient
 # from .ipo_data_validator import (
 #     validate_and_normalize_ipo_information,
 # )
-from configuration import MAX_WEBPAGE_CONTENT_LENGTH
+from src.llm_orchestration.configuration import MAX_WEBPAGE_CONTENT_LENGTH
 
 logger = logging.getLogger(__name__)
 

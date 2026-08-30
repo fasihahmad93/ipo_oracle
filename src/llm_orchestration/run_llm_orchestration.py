@@ -1,17 +1,17 @@
 import logging
 from pathlib import Path
 
-from extraction.crawler_json_loader import (
+from src.llm_orchestration.extraction.crawler_json_loader import (
     load_crawled_webpages_from_json,
 )
 
 logger = logging.getLogger(__name__)
 
-from extraction.ipo_information_extractor import (
+from src.llm_orchestration.extraction.ipo_information_extractor import (
     IPOInformationExtractor,
 )
 
-from ipo_table_formatter import (
+from src.llm_orchestration.ipo_table_formatter import (
     convert_ipo_records_to_text,
     save_ipo_records_to_text,
 )
