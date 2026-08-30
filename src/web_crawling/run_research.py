@@ -7,7 +7,7 @@ from pathlib import Path
 
 import yaml
 
-from research import search_and_crawl_webpages
+from src.web_crawling.research import search_and_crawl_webpages
 
 logger = logging.getLogger(__name__)
 

@@ -2,7 +2,7 @@ import logging
 
 import requests
 
-from configuration import (
+from src.llm_orchestration.configuration import (
     OLLAMA_MODEL_NAME,
     OLLAMA_REQUEST_TIMEOUT_SECONDS,
     OLLAMA_SERVER_URL,
@@ -18,10 +18,13 @@ class OllamaLanguageModelClient:
         ollama_server_url: str = OLLAMA_SERVER_URL,
         ollama_model_name: str = OLLAMA_MODEL_NAME,
     ):
+        logger.info(
+            "Starting Ollama language-model client initialization"
+        )
 
-        logger.info("Starting Ollama language-model client initialization")
         self.ollama_server_url = ollama_server_url
         self.ollama_model_name = ollama_model_name
+
         logger.info(
             "Ollama language-model client initialized for model %s at %s",
             self.ollama_model_name,
@@ -33,7 +36,10 @@ class OllamaLanguageModelClient:
         language_model_prompt: str,
     ) -> str:
 
-        logger.info("Starting text generation with the Ollama language model")
+        logger.info(
+            "Starting text generation with the Ollama language model"
+        )
+
         ollama_generate_endpoint = (
             f"{self.ollama_server_url}/api/generate"
         )
@@ -42,20 +48,47 @@ class OllamaLanguageModelClient:
             "model": self.ollama_model_name,
             "prompt": language_model_prompt,
             "stream": False,
+            "options": {
+                "temperature": 0,
+                "num_predict": 3000,
+            },
         }
 
-        logger.info("Sending text-generation request to %s", ollama_generate_endpoint)
-        ollama_response = requests.post(
+        logger.info(
+            "Sending text-generation request to %s",
             ollama_generate_endpoint,
-            json=ollama_request_payload,
-            timeout=OLLAMA_REQUEST_TIMEOUT_SECONDS,
         )
 
-        ollama_response.raise_for_status()
-        logger.info("Ollama text-generation request completed successfully")
+        try:
+            ollama_response = requests.post(
+                ollama_generate_endpoint,
+                json=ollama_request_payload,
+                timeout=OLLAMA_REQUEST_TIMEOUT_SECONDS,
+            )
+
+            ollama_response.raise_for_status()
+
+        except requests.exceptions.Timeout:
+            logger.error(
+                "Ollama request timed out after %d seconds",
+                OLLAMA_REQUEST_TIMEOUT_SECONDS,
+            )
+            raise
+
+        except requests.exceptions.RequestException:
+            logger.exception(
+                "Ollama request failed"
+            )
+            raise
 
         ollama_response_data = ollama_response.json()
-        generated_language_model_response = ollama_response_data["response"]
 
-        logger.info("Returning generated text from Ollama")
+        generated_language_model_response = (
+            ollama_response_data["response"]
+        )
+
+        logger.info(
+            "Ollama text-generation request completed successfully"
+        )
+
         return generated_language_model_response

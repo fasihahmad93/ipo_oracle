@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 async def run_ipo_research_pipeline(
     search_term: str,
-    maximum_search_result_count: int = 5,
+    maximum_search_result_count: int = 2,
 ) -> str:
     """
     Run the complete IPO research pipeline.

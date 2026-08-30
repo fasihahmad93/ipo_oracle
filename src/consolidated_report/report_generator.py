@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import logging
 
-from helper.file_import import import_text, import_yaml
-from llm_orchestration.extraction.ollama_llm_client import OllamaLanguageModelClient
+from src.helper.file_import import import_text, import_yaml
+from src.llm_orchestration.extraction.ollama_llm_client import OllamaLanguageModelClient
 
 from .config import IPO_TEXT_FILE, MODEL_NAME, OLLAMA_SERVER_URL, OUTPUT_MARKDOWN_FILE, PROMPT_YAML_FILE
 

@@ -1,40 +1,85 @@
-# Consolidated IPO Report
+1. **Purple Style Labs**
+   - Grey Market Premium (GMP): ₹30
+   - Issue Price: ₹546-₹575
+   - Estimated Listing Price: ₹680 Cr
+   - Date Range: 31 Aug - 2 Sep
 
-## Summary
-- Total IPO entries found: 22
-- Sources reviewed: 1
+2. **Phychem Technologies**
+   - Grey Market Premium (GMP): ₹3
+   - Issue Price: ₹51 - ₹54
+   - Estimated Listing Price: ₹14.58 Cr
+   - Date Range: 31 Aug - 2 Sep
 
-## Detailed IPO Entries
-| Company              | Opening Date | Closing Date | GMP   | Issue Price | Lot Size      | Source   |
-|----------------------|---------------|---------------|-------|-------------|---------------|----------|
-| Lumino Industries    | 27-31 Aug     | 29 Aug        | ₹60   | ₹82         | not available | IPO360   |
-| Annu Projects        | 25-28 Aug     | 29 Aug        | ₹-    | ₹99         | not available | IPO360   |
-| Symbiotec Pharmalab  | 24-27 Aug     | 29 Aug        | ₹260  | ₹988        | not available | IPO360   |
-| Hy-Tech Engineers    | 24-27 Aug     | 29 Aug        | ₹40   | ₹53         | not available | IPO360   |
-| Skyways Air Services | 24-27 Aug     | 29 Aug        | ₹37   | ₹138        | not available | IPO360   |
-| Augmont Enterprises  | 21-25 Aug     | 29 Aug        | ₹300  | ₹786        | not available | IPO360   |
-| Farm Peace           | 1-3 Sep       | 29 Aug        | ₹0    | ₹59         | not available | IPO360   |
-| Ashutosh Fibre       | 31-2 Sep      | 29 Aug        | ₹37   | ₹92         | not available | IPO360   |
-| Phychem Technologies | 31-2 Sep      | 29 Aug        | ₹3    | ₹54         | not available | IPO360   |
-| Shanti Inorganics    | 31-2 Sep      | 29 Aug        | ₹31   | ₹83         | not available | IPO360   |
-| Paluck Technologies  | 28-1 Sep      | 29 Aug        | ₹25   | ₹48         | not available | IPO360   |
-| Complete Sports & Management | 28-1 Sep | 29 Aug        | ₹0    | ₹135        | not available | IPO360   |
-| Kwick Forensic Solutions | 27-31 Aug  | 29 Aug        | ₹64   | ₹90         | not available | IPO360   |
-| Sumax Engineering    | 25-28 Aug     | 29 Aug        | ₹35   | ₹101        | not available | IPO360   |
-| Madhur Knit Crafts   | 24-27 Aug     | 29 Aug        | ₹0    | ₹100        | not available | IPO360   |
-| ABH Healthcare       | 24-27 Aug     | 29 Aug        | ₹0    | ₹102        | not available | IPO360   |
+3. **Ashutosh Fibre**
+   - Grey Market Premium (GMP): ₹37
+   - Issue Price: ₹87 - ₹92
+   - Estimated Listing Price: ₹56.35 Cr
+   - Date Range: 31 Aug - 2 Sep
 
-## Notes
-- Missing or conflicting values are marked as "not available".
-- The actual performance of the shares will depend on several factors, including the company’s performance, general market conditions, and other factors.
-- The IPO GMP, or IPO Grey Market Premium, is an indicator of investor sentiment, not a promise of listing gains. It is essential to read IPO analysis before applying for an IPO and not to subscribe to the IPO at the premium given above without any prior notice or information.
+4. **Shanti Inorganics**
+   - Grey Market Premium (GMP): ₹31
+   - Issue Price: ₹79 - ₹83
+   - Estimated Listing Price: ₹47.24 Cr
+   - Date Range: 31 Aug - 2 Sep
 
-company_name: Deepa Jewellers
-ipo_opening_date: 1 Sep
-ipo_closing_date: 3 Sep
-grey_market_premium: ₹48
-issue_price: ₹168 - ₹177
-lot_size: not provided
-source_url: IPO360
+5. **Rays of Belief**
+   - Grey Market Premium (GMP): ₹30
+   - Issue Price: ₹227 - ₹239
+   - Estimated Listing Price: ₹125 Cr
+   - Date Range: 1 Sep - 3 Sep
 
-Note: The above information is presented in a structured format for better understanding.
+6. **Annu Projects**
+   - Grey Market Premium (GMP): +₹1
+   - Issue Price: ₹94 - ₹99
+   - Estimated Listing Price: ₹175.06 Cr
+   - Date Range: 25 Aug - 28 Aug
+
+7. **Sumax Engineering**
+   - Grey Market Premium (GMP): +₹36
+   - Issue Price: ₹95 - ₹101
+   - Estimated Listing Price: ₹53.40 Cr
+   - Date Range: 25 Aug - 28 Aug
+
+8. **Symbiotec Pharmalab**
+   - Grey Market Premium (GMP): +₹240
+   - Issue Price: ₹938 - ₹988
+   - Estimated Listing Price: ₹1,757 Cr
+   - Date Range: 24 Aug - 27 Aug
+
+9. **Madhur Knit Crafts**
+   - Grey Market Premium (GMP): +₹2
+   - Issue Price: ₹95 - ₹100
+   - Estimated Listing Price: ₹53.27 Cr
+   - Date Range: 24 Aug - 27 Aug
+
+10. **Augmont Enterprises**
+    - Grey Market Premium (GMP): +₹290
+    - Issue Price: ₹750 - ₹788
+    - Estimated Listing Price: ₹825 Cr
+    - Date Range: 21 Aug - 25 Aug
+
+11. **ABH Healthcare**
+    - Grey Market Premium (GMP): ₹0
+    - Issue Price: ₹96 - ₹102
+    - Estimated Listing Price: ₹34.98 Cr
+    - Date Range: 24 Aug - 27 Aug
+
+12. **Skyways Air**
+    - Grey Market Premium (GMP): +₹40
+    - Issue Price: ₹131 - ₹138
+    - Estimated Listing Price: ₹582.80 Cr
+    - Date Range: 24 Aug - 27 Aug
+
+13. **Hy-Tech Engineers**
+    - Grey Market Premium (GMP): +₹43
+    - Issue Price: ₹50 - ₹53
+    - Estimated Listing Price: ₹135.73 Cr
+    - Date Range: 24 Aug - 27 Aug
+
+14. **IPO GMP**
+    - Grey Market Premium (GMP): 25.59%
+    - Issue Price: ₹938 - ₹988
+    - Estimated Listing Price: ₹1,757 Cr
+    - Date Range: 24 Aug - 27 Aug
+
+Please note that the information provided is based on the text you shared and may not be accurate. Always conduct thorough research and consult with a financial advisor before making investment decisions.
