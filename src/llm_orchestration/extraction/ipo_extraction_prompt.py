@@ -28,14 +28,14 @@ Rules:
 - lot_size: number of shares in one lot.
 - source_url: use the supplied source URL.
 - Use null when the value is not explicitly available.
+- Do not return anything if the webpage content is not related to IPO information.
 - Do not explain anything.
-- Do not use Markdown.
-- Do not return JSON.
 """
 
 def create_ipo_information_extraction_prompt(
     webpage_content: str,
     source_url: str,
+    extraction_prompt: str = IPO_INFORMATION_EXTRACTION_SYSTEM_PROMPT
 ) -> str:
 
     logger.info(
@@ -43,6 +43,10 @@ def create_ipo_information_extraction_prompt(
     )
 
     return f"""
+
+Instruction:
+{extraction_prompt}
+    
 SOURCE URL:
 {source_url}
 

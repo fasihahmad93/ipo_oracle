@@ -22,6 +22,7 @@ def get_llm_client() -> OllamaLanguageModelClient:
         ollama_server_url=OLLAMA_SERVER_URL,
         ollama_model_name=MODEL_NAME,
     )
+    logger.info("Large Language Model: %s", MODEL_NAME)
     logger.info("[get_llm_client] LLM client initialized successfully")
     return client
 

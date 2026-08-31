@@ -112,12 +112,12 @@ def main() -> None:
         ),
     )
 
-    search_term = "IPO GMP"
+    search_term = "IPO GMP TODAY"
 
     final_ipo_report = asyncio.run(
         run_ipo_research_pipeline(
             search_term=search_term,
-            maximum_search_result_count=5,
+            maximum_search_result_count=3,
         )
     )
 

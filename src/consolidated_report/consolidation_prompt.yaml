@@ -11,8 +11,8 @@ prompt: |
   - If a field is missing, leave it as "Not available".
   - Prefer markdown headings, bullets, and tables where useful.
   - Do not invent facts not present in the source text.
-  - Keep the report concise but informative.
-  - Return only markdown, no extra commentary.
+  - Keep the report short and concise but informative.
+ 
 
   Output structure:
   # Consolidated IPO Report
@@ -23,8 +23,6 @@ prompt: |
 
   ## Detailed IPO Entries
   | Company | Opening Date | Closing Date | GMP | Issue Price | Lot Size | Source |
-  |---|---|---|---|---|---|---|
-  | ... | ... | ... | ... | ... | ... | ... |
 
-  ## Notes
-  - Mention any missing or conflicting values.
+  ## Investing Strategy
+  - Suggest some stock to be invested in based on the Grey Market Premium (GMP) and other factors. Provide a brief rationale for each suggestion.

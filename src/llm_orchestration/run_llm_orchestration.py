@@ -31,7 +31,7 @@ def run_ipo_information_extraction_pipeline():
     logger.info("Starting IPO information extraction pipeline")
     print("Loading crawled webpages...")
 
-    logger.info("Loading crawled webpage records from %s", CRAWLER_OUTPUT_JSON_FILE)
+    # logger.info("Loading crawled webpage records from %s", CRAWLER_OUTPUT_JSON_FILE)
     crawled_webpages = (
         load_crawled_webpages_from_json(
             CRAWLER_OUTPUT_JSON_FILE
@@ -75,8 +75,9 @@ def run_ipo_information_extraction_pipeline():
         IPO_OUTPUT_TXT_FILE,
     )
 
-    print("\nIPO INFORMATION\n")
-    print(ipo_text_output)
+    if (False): # Make it true to print the extracted IPO infomation
+        print("\nIPO INFORMATION\n")
+        print(ipo_text_output)
 
     logger.info("IPO information extraction pipeline completed")
     return ipo_text_output

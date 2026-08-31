@@ -5,33 +5,10 @@ from .ipo_extraction_prompt import (
     create_ipo_information_extraction_prompt,
 )
 from .ollama_llm_client import OllamaLanguageModelClient
-# from .ipo_data_validator import (
-#     validate_and_normalize_ipo_information,
-# )
+
 from src.llm_orchestration.configuration import MAX_WEBPAGE_CONTENT_LENGTH
 
 logger = logging.getLogger(__name__)
-
-
-# def parse_plain_text_ipo_information(raw_ipo_information: str) -> dict[str, str | None]:
-#     """Convert plain-text key/value output from Ollama into a dictionary."""
-#     parsed_ipo_information: dict[str, str | None] = {}
-#
-#     for line in raw_ipo_information.splitlines():
-#         line = line.strip()
-#         if not line or ":" not in line:
-#             continue
-#
-#         field_name, field_value = line.split(":", 1)
-#         normalized_field_name = field_name.strip()
-#         normalized_field_value = field_value.strip()
-#
-#         if normalized_field_value.lower() in {"null", "none"}:
-#             parsed_ipo_information[normalized_field_name] = None
-#         else:
-#             parsed_ipo_information[normalized_field_name] = normalized_field_value
-#
-#     return parsed_ipo_information
 
 
 class IPOInformationExtractor:
@@ -77,29 +54,7 @@ class IPOInformationExtractor:
                 ipo_information_extraction_prompt
             )
         )
-        # extracted_ipo_information = parse_plain_text_ipo_information(raw_ipo_information)
-
-        # logger.info("Validating the extracted IPO information")
-        # validated_ipo_information = (
-        #     validate_and_normalize_ipo_information(
-        #         raw_ipo_information
-        #     )
-        # )
-
-        # validated_ipo_information["source_url"] = (
-        #     crawled_webpage.source_url
-        # )
-
-        # populated_ipo_fields = [
-        #     field_name
-        #     for field_name, field_value in validated_ipo_information.items()
-        #     if field_name != "source_url" and field_value is not None
-        # ]
-        # logger.info(
-        #     "IPO extraction returned %d populated fields: %s",
-        #     len(populated_ipo_fields),
-        #     ", ".join(populated_ipo_fields) or "none",
-        # )
+       
         logger.info("IPO extraction completed for %s", crawled_webpage.source_url)
         return raw_ipo_information
 
@@ -114,7 +69,7 @@ class IPOInformationExtractor:
         for webpage_position, crawled_webpage in enumerate(crawled_webpages, start=1):
 
             try:
-
+                logger.info("Large Language Model: %s ", self.ollama_language_model_client.ollama_model_name)
                 logger.info(
                     "Extracting IPO information from webpage %d of %d: %s",
                     webpage_position,
