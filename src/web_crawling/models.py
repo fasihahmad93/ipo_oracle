@@ -14,5 +14,6 @@ class CrawledPage:
     page_url: str
     page_title: Optional[str]
     markdown_content: str
+    html_content: str
     was_crawled_successfully: bool
     error_message: Optional[str] = None

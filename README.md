@@ -1,80 +1,91 @@
 # IPO Oracle
 
-IPO Oracle is a small research and extraction pipeline for gathering IPO-related information from web search results and crawled pages, then sending the content to a local Ollama model for extraction.
+IPO Oracle researches Indian IPO grey-market-premium pages, parses their rendered HTML tables with pandas, and uses Ollama only to produce the final markdown report.
 
-The project currently has two main pieces:
+## Workflow
 
-- Web research workflow: searches for relevant keywords, crawls pages, and saves the crawled content
-- LLM orchestration workflow: loads the crawled data and extracts IPO details using a local Ollama model
+```text
+Search → Crawl rendered HTML → Parse IPO/GMP tables → Validate → Final LLM report
+```
 
-## Project structure
+```text
+┌──────────────────┐
+│ IPO search query │
+└────────┬─────────┘
+         ▼
+┌──────────────────┐
+│ DDGS web search  │
+└────────┬─────────┘
+         ▼
+┌──────────────────┐
+│ Crawl4AI         │
+│ rendered HTML    │
+└────────┬─────────┘
+         ▼
+┌──────────────────┐
+│ pandas.read_html │
+│ select IPO/GMP   │
+│ tables           │
+└────────┬─────────┘
+         ▼
+┌──────────────────┐
+│ Normalize and    │
+│ validate records │
+└────────┬─────────┘
+         ▼
+┌──────────────────┐
+│ Ollama           │
+│ final Markdown   │
+│ report only      │
+└──────────────────┘
+```
 
-- `src/web_crawling/` — search, crawl, and save research results
-- `src/llm_orchestration/` — extraction pipeline and output generation
-- `notebook/` — exploratory Jupyter notebooks for testing
-- `requirements.txt` — Python dependencies
+- Search uses DDGS.
+- Crawl4AI provides rendered HTML and markdown.
+- `pandas.read_html()` extracts table rows deterministically; no LLM extracts company data.
+- The final report prompt lives in `src/prompts/final_report.yaml`.
 
 ## Setup
 
-1. Create and activate a virtual environment:
-
 ```bash
-python -m venv .venv
 source .venv/bin/activate
-```
-
-2. Install dependencies:
-
-```bash
 pip install -r requirements.txt
-```
-
-3. Ensure Ollama is running locally:
-
-```bash
 ollama serve
 ```
 
-4. Confirm the model exists:
+Pull the model configured in `.env`, for example:
 
 ```bash
-ollama pull iodose/nuextract-v1.5
+ollama pull qwen3.5:4b
 ```
 
-5. Configure values in:
+## Configuration
 
-- `src/web_crawling/config.yaml`
-- `src/llm_orchestration/config.yaml`
+All runtime settings are in `.env`:
 
-## Run the research crawl
+```dotenv
+OLLAMA_SERVER_URL=http://localhost:11434
+OLLAMA_MODEL_NAME=qwen3.5:4b
+OLLAMA_REQUEST_TIMEOUT_SECONDS=480
+OLLAMA_TEMPERATURE=0
+OLLAMA_REASONING=false
+OLLAMA_CONTEXT_WINDOW=4096
 
-From the project root:
+IPO_SEARCH_TERM=IPO GMP TODAY
+IPO_MAX_SEARCH_RESULTS=5
+IPO_MAX_RESEARCH_RETRIES=2
+```
+
+## Run
 
 ```bash
-python src/web_crawling/run_research.py
+python main.py
 ```
 
-This searches the web for IPO-related pages, crawls the results, and writes JSON output to:
+The logs show the tables selected from each source and the number of extracted records. Pages without standard HTML tables are skipped rather than being guessed by an LLM.
 
-- `src/web_crawling/output/research_results.json`
-
-## Run the IPO extraction pipeline
-
-From the project root:
+## Test
 
 ```bash
-python src/llm_orchestration/main.py
+python -m pytest -q
 ```
-
-This loads the crawled pages, sends them to Ollama for IPO extraction, and writes the raw plain-text output to:
-
-- `src/llm_orchestration/output/ipo_information.txt`
-
-## Notes
-
-- The project currently saves raw LLM output as plain text instead of structured JSON or DataFrame output.
-- The crawler and extraction logic depend on the repo path structure, so it is best to run commands from the project root or from the relevant script directory with the correct virtual environment activated.
-
-## License
-
-This project is for local research and experimentation purposes.

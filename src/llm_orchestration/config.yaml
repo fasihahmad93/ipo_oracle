@@ -1,4 +1,0 @@
-ollama_server_url: "http://localhost:11434"
-ollama_model_name: "qwen2.5:7b"
-ollama_request_timeout_seconds: 480
-max_webpage_content_length: 150000

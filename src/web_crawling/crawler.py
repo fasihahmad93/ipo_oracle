@@ -2,6 +2,7 @@ import logging
 
 from crawl4ai import AsyncWebCrawler
 
+from src.telemetry import estimate_token_count
 from src.web_crawling.models import CrawledPage
 
 logger = logging.getLogger(__name__)
@@ -24,10 +25,13 @@ def remove_links_from_text(text: str) -> str:
 
     text_without_links = re.sub(url_pattern, "", text)
 
-    # Clean up extra whitespace left after removing URLs
-    text_without_links = re.sub(r"\s+", " ", text_without_links).strip()
-
-    return text_without_links
+    # Preserve line breaks: Crawl4AI uses them to represent table rows, and the
+    # extraction step needs those rows to locate one company's details.
+    return "\n".join(
+        re.sub(r"[ \t]+", " ", line).strip()
+        for line in text_without_links.splitlines()
+        if line.strip()
+    )
 
 
 
@@ -50,6 +54,7 @@ async def crawl_single_webpage(
                 page_url=target_url,
                 page_title=None,
                 markdown_content="",
+                html_content="",
                 was_crawled_successfully=False,
                 error_message=crawl_response.error_message,
             )
@@ -60,16 +65,21 @@ async def crawl_single_webpage(
             page_title = crawl_response.metadata.get("title")
 
         markdown_content = str(crawl_response.markdown or "")
+        html_content = str(getattr(crawl_response, "html", "") or "")
         logger.info(
-            "Extracted %d characters of markdown from %s",
-            len(markdown_content),
+            "Crawl telemetry | url=%s | markdown_characters=%d | "
+            "html_characters=%d | scraped_estimated_tokens=%d",
             target_url,
+            len(markdown_content),
+            len(html_content),
+            estimate_token_count(markdown_content),
         )
         logger.info("Crawl succeeded for %s", target_url)
         page =  CrawledPage(
             page_url=target_url,
             page_title=page_title,
             markdown_content=markdown_content,
+            html_content=html_content,
             was_crawled_successfully=True,
         )
         page.markdown_content = remove_links_from_text(page.markdown_content)
@@ -82,6 +92,7 @@ async def crawl_single_webpage(
             page_url=target_url,
             page_title=None,
             markdown_content="",
+            html_content="",
             was_crawled_successfully=False,
             error_message=str(crawl_error),
         )
