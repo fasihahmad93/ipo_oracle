@@ -86,20 +86,27 @@ def consolidation_node(state: IPOOracleState) -> dict:
 
     logger.info("Graph node: CONSOLIDATION")
 
+    from datetime import date
+
     records_text = "\n\n".join(
         record.model_dump_json()
         for record in state.get("extracted_records", [])
     )
+    report_date = date.today().strftime("%Y-%m-%d")
     logger.info(
-        "Consolidation telemetry | record_count=%d | input_estimated_tokens=%d",
+        "Consolidation telemetry | record_count=%d | input_estimated_tokens=%d | report_date=%s",
         len(state.get("extracted_records", [])),
         estimate_token_count(records_text),
+        report_date,
     )
 
     prompt = ChatPromptTemplate.from_template(load_prompt_template("final_report"))
 
     model = create_ollama_chat_model(json_output=False)
-    response = (prompt | model).invoke({"records_text": records_text})
+    response = (prompt | model).invoke({
+        "records_text": records_text,
+        "report_date": report_date,
+    })
 
     final_report = (
         response.content
