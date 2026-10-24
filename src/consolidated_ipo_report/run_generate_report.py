@@ -9,7 +9,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-logger.info("[main] Starting consolidated_report entry point")
+logger.info("[main] Starting consolidated_ipo_report entry point")
 
 # Add src root to path for absolute imports
 SRC_ROOT = Path(__file__).resolve().parents[1]
@@ -20,7 +20,7 @@ if str(SRC_ROOT) not in sys.path:
     logger.debug("[main] Added src root to sys.path")
 
 logger.info("[main] Importing generate_consolidated_report")
-from consolidated_report.report_generator import generate_consolidated_report
+from consolidated_ipo_report.report_generator import generate_consolidated_report
 logger.info("[main] Import successful")
 
 

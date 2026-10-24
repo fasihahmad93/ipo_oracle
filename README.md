@@ -10,7 +10,7 @@ It has two stages:
 ## Project structure
 
 - `src/web_crawling/` — search, crawl, and save research results
-- `src/consolidated_report/` — consolidated table prompt, Ollama client, and CSV output
+- `src/consolidated_ipo_report/` — consolidated IPO table prompt, Ollama client, and report output
 - `notebook/` — exploratory Jupyter notebooks for testing
 - `requirements.txt` — Python dependencies
 
@@ -28,10 +28,10 @@ OLLAMA_CONTEXT_WINDOW=32000
 IPO_SEARCH_TERM=IPO GMP TODAY
 IPO_MAX_SEARCH_RESULTS=3
 IPO_HTML_SOURCE_DIRECTORY=src/web_crawling/scrapped pages
-IPO_OUTPUT_CSV_FILE=src/consolidated_report/output/consolidated_ipo_report.csv
+IPO_OUTPUT_CSV_FILE=src/consolidated_ipo_report/output/consolidated_ipo_report.csv
 ```
 
-The model instructions are kept separately in `src/consolidated_report/consolidation_prompt.yaml`.
+The model instructions are kept separately in `src/consolidated_ipo_report/consolidation_prompt.yaml`.
 
 ## Setup
 
@@ -85,7 +85,7 @@ python main.py
 
 This searches and crawls webpages, sends all extracted HTML tables to Ollama in one request, and writes the consolidated table to:
 
-- `src/consolidated_report/output/consolidated_ipo_report.csv`
+- `src/consolidated_ipo_report/output/consolidated_ipo_report.csv`
 
 The standalone crawl uses `src/web_crawling/config.yaml`; `main.py` uses the `.env` search values above.
 
