@@ -89,6 +89,18 @@ This searches and crawls webpages, sends all extracted HTML tables to Ollama in 
 
 The standalone crawl uses `src/web_crawling/config.yaml`; `main.py` uses the `.env` search values above.
 
+## Run the Streamlit frontend
+
+From the project root, with the virtual environment activated and `.env` configured:
+
+```bash
+streamlit run streamlit_app.py
+```
+
+The page lets you enter a search term and result limit, then runs the same research
+and report-generation pipeline as `main.py`. It displays IPOs in narrow-screen
+friendly cards and provides the consolidated report as a downloadable CSV.
+
 ## Output
 
 The final CSV contains `company_name`, `price_band`, `lot_size`, `end_date_of_applying`, and `gmp`. Only IPOs that the source tables explicitly show as open are included.
