@@ -7,10 +7,10 @@ from src.web_crawling.run_research import (
     run_research_workflow,
 )
 
-from src.consolidated_report.report_generator import (
+from src.consolidated_ipo_report.report_generator import (
     generate_consolidated_report,
 )
-from src.consolidated_report.config import IPO_MAX_SEARCH_RESULTS, IPO_SEARCH_TERM
+from src.consolidated_ipo_report.config import IPO_MAX_SEARCH_RESULTS, IPO_SEARCH_TERM
 
 from src.cli.banner import display_cli_banner
 
@@ -87,7 +87,7 @@ def main() -> None:
     display_cli_banner()
     
     logging.basicConfig(
-        level=logging.INFO,
+        level=logging.WARNING,
         format=(
             "%(asctime)s | "
             "%(levelname)s | "

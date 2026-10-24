@@ -7,9 +7,9 @@ import pandas as pd
 import yaml
 
 import main as application
-from src.consolidated_report.ollama_client import OllamaLanguageModelClient
-from src.consolidated_report.report_generator import generate_consolidated_report
-from src.consolidated_report.table_ipo_report import (
+from src.consolidated_ipo_report.ollama_client import OllamaLanguageModelClient
+from src.consolidated_ipo_report.report_generator import generate_consolidated_report
+from src.consolidated_ipo_report.table_ipo_report import (
     IPO_COLUMNS,
     IPO_RECORDS_JSON_SCHEMA,
     build_consolidated_ipo_prompt,
@@ -136,7 +136,7 @@ def test_ollama_client_uses_configured_request_options(monkeypatch) -> None:
         captured.update(url=url, payload=json, timeout=timeout)
         return FakeResponse()
 
-    monkeypatch.setattr("src.consolidated_report.ollama_client.requests.post", fake_post)
+    monkeypatch.setattr("src.consolidated_ipo_report.ollama_client.requests.post", fake_post)
     client = OllamaLanguageModelClient(
         "http://localhost:11434/", "test-model", 12, 0.3, 4096
     )

@@ -5,7 +5,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 logger = logging.getLogger(__name__)
-logger.info("Loading consolidated_report configuration")
+logger.info("Loading consolidated_ipo_report configuration")
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 logger.debug(f"Project root: {PROJECT_ROOT}")
