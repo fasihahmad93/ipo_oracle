@@ -24,8 +24,10 @@ def remove_links_from_text(text: str) -> str:
 
     text_without_links = re.sub(url_pattern, "", text)
 
-    # Clean up extra whitespace left after removing URLs
-    text_without_links = re.sub(r"\s+", " ", text_without_links).strip()
+    text_without_links = text_without_links.replace("\r\n", "\n").replace("\r", "\n")
+    text_without_links = re.sub(r"[^\S\n]+", " ", text_without_links)
+    text_without_links = re.sub(r" *\n *", "\n", text_without_links)
+    text_without_links = re.sub(r"\n{3,}", "\n\n", text_without_links).strip()
 
     return text_without_links
 
@@ -71,6 +73,7 @@ async def crawl_single_webpage(
             page_title=page_title,
             markdown_content=markdown_content,
             was_crawled_successfully=True,
+            html_content=crawl_response.html or crawl_response.cleaned_html or "",
         )
         page.markdown_content = remove_links_from_text(page.markdown_content)
         return page

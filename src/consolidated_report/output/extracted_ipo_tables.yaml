@@ -1,0 +1,130 @@
+tables:
+- table_number: 1
+  rows:
+  - Company: Bombay Coated and Special Steels Upcoming
+    GMP*: ₹8
+    Trend: 🟢
+    Price Band: ₹82
+    Est. Gain: ₹90 (6.10%)
+    Date: 29-2 Nov
+  - Company: M.K.Sons Fine Jewels Upcoming
+    GMP*: ₹0
+    Trend: 🟡
+    Price Band: ₹162
+    Est. Gain: ₹162 (0.00%)
+    Date: 28-30 Oct
+  - Company: SFC Environmental Technologies Upcoming
+    GMP*: ₹21
+    Trend: 🔴
+    Price Band: ₹330
+    Est. Gain: ₹351 (6.36%)
+    Date: 27-29 Oct
+  - Company: BLS Polymers Upcoming
+    GMP*: ₹38
+    Trend: 🟢
+    Price Band: ₹150
+    Est. Gain: ₹188 (25.33%)
+    Date: 27-29 Oct
+  - Company: EAAA India Alternatives Upcoming
+    GMP*: ₹121
+    Trend: 🟡
+    Price Band: ₹1,665
+    Est. Gain: ₹1786 (7.27%)
+    Date: 26-28 Oct
+  - Company: Jio Platforms (C)
+    GMP*: ₹260
+    Trend: 🟢
+    Price Band: ₹1,119
+    Est. Gain: ₹1,379 (23.24%)
+    Date: 21-23 Oct
+  - Company: Paras Healthcare (C)
+    GMP*: ₹10
+    Trend: 🔴
+    Price Band: ₹693
+    Est. Gain: ₹703 (1.44%)
+    Date: 21-23 Oct
+- table_number: 2
+  rows:
+  - Company: Carver Roboweld Upcoming
+    GMP*: ₹0
+    Trend: 🟡
+    Price Band: ₹80
+    Est. Gain: ₹80 (0.00%)
+    Date: 28-30 Oct
+  - Company: Wiscon Industries Upcoming
+    GMP*: ₹0
+    Trend: 🟡
+    Price Band: ₹204
+    Est. Gain: ₹204 (0.00%)
+    Date: 27-29 Oct
+  - Company: Core4 Engineers Open
+    GMP*: ₹0
+    Trend: 🟡
+    Price Band: ₹93
+    Est. Gain: ₹93 (0.00%)
+    Date: 23-27 Oct
+- table_number: 3
+  rows:
+  - Company: Bombay Coated IPO  MB  ₹78 - ₹82  29 Oct-2 Nov
+    Issue Price: ₹78 - ₹82
+    Open Date: 29 Oct
+    Close Date: 2 Nov
+    Listing Date: 5 Nov
+    GMP  (Grey Market Premium and expected listing gain %): ₹7  8.54%
+    Trend  (Historical GMP chart): null
+  - Company: MK Sons IPO  MB  ₹153 - ₹162  28-30 Oct
+    Issue Price: ₹153 - ₹162
+    Open Date: 28 Oct
+    Close Date: 30 Oct
+    Listing Date: 4 Nov
+    GMP  (Grey Market Premium and expected listing gain %): ₹0  0.00%
+    Trend  (Historical GMP chart): null
+  - Company: BLS Polymers IPO  MB  ₹142 - ₹150  27-29 Oct
+    Issue Price: ₹142 - ₹150
+    Open Date: 27 Oct
+    Close Date: 29 Oct
+    Listing Date: 3 Nov
+    GMP  (Grey Market Premium and expected listing gain %): ₹32  21.33%
+    Trend  (Historical GMP chart): null
+  - Company: SFC Environmental IPO  MB  ₹313 - ₹330  27-29 Oct
+    Issue Price: ₹313 - ₹330
+    Open Date: 27 Oct
+    Close Date: 29 Oct
+    Listing Date: 3 Nov
+    GMP  (Grey Market Premium and expected listing gain %): ₹22  6.67%
+    Trend  (Historical GMP chart): null
+  - Company: Wiscon Industries IPO  SME  ₹194 - ₹204  27-29 Oct
+    Issue Price: ₹194 - ₹204
+    Open Date: 27 Oct
+    Close Date: 29 Oct
+    Listing Date: 3 Nov
+    GMP  (Grey Market Premium and expected listing gain %): ₹0  0.00%
+    Trend  (Historical GMP chart): null
+  - Company: EAAA India IPO  MB  ₹1585 - ₹1665  26-28 Oct
+    Issue Price: ₹1585 - ₹1665
+    Open Date: 26 Oct
+    Close Date: 28 Oct
+    Listing Date: 2 Nov
+    GMP  (Grey Market Premium and expected listing gain %): ₹133  7.99%
+    Trend  (Historical GMP chart): null
+  - Company: Core4 Engineers IPO  SME  ₹88 - ₹93  23-27 Oct
+    Issue Price: ₹88 - ₹93
+    Open Date: 23 Oct
+    Close Date: 27 Oct
+    Listing Date: 30 Oct
+    GMP  (Grey Market Premium and expected listing gain %): ₹0  0.00%
+    Trend  (Historical GMP chart): null
+  - Company: Jio Platforms IPO  MB  ₹1065 - ₹1119  21-23 Oct
+    Issue Price: ₹1065 - ₹1119
+    Open Date: 21 Oct
+    Close Date: 23 Oct
+    Listing Date: 28 Oct
+    GMP  (Grey Market Premium and expected listing gain %): ₹254  22.70%
+    Trend  (Historical GMP chart): null
+  - Company: Paras Healthcare IPO  MB  ₹660 - ₹693  21-23 Oct
+    Issue Price: ₹660 - ₹693
+    Open Date: 21 Oct
+    Close Date: 23 Oct
+    Listing Date: 28 Oct
+    GMP  (Grey Market Premium and expected listing gain %): ₹16  2.31%
+    Trend  (Historical GMP chart): null

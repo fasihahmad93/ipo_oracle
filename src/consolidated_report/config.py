@@ -1,6 +1,5 @@
 import logging
 import os
-import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -12,28 +11,46 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 logger.debug(f"Project root: {PROJECT_ROOT}")
 
 SRC_ROOT = PROJECT_ROOT / "src"
-LLM_ORCHESTRATION_ROOT = SRC_ROOT / "llm_orchestration"
 logger.debug(f"Src root: {SRC_ROOT}")
-logger.debug(f"LLM orchestration root: {LLM_ORCHESTRATION_ROOT}")
-
-for path in (str(SRC_ROOT), str(LLM_ORCHESTRATION_ROOT)):
-    if path not in sys.path:
-        sys.path.insert(0, path)
-        logger.debug(f"Added to sys.path: {path}")
 
 env_file = PROJECT_ROOT / ".env"
 logger.info(f"Loading environment from: {env_file}")
 load_dotenv(env_file)
 logger.info("Environment variables loaded")
 
-IPO_TEXT_FILE = SRC_ROOT / "llm_orchestration" / "output" / "ipo_information.txt"
-PROMPT_YAML_FILE = Path(__file__).resolve().with_name("consolidation_prompt.yaml")
-OUTPUT_MARKDOWN_FILE = Path(__file__).resolve().parent / "output" / "consolidated_ipo_report.md"
-logger.debug(f"IPO text file: {IPO_TEXT_FILE}")
-logger.debug(f"Prompt YAML file: {PROMPT_YAML_FILE}")
-logger.debug(f"Output markdown file: {OUTPUT_MARKDOWN_FILE}")
+def _required_environment_variable(name: str) -> str:
+    value = os.getenv(name)
+    if not value or not value.strip():
+        raise ValueError(f"{name} must be set in .env.")
+    return value.strip()
 
-OLLAMA_SERVER_URL = os.getenv("OLLAMA_SERVER_URL", "http://localhost:11434")
-MODEL_NAME = os.getenv("OLLAMA_MODEL_NAME") or os.getenv("MODEL_NAME")
+
+def _positive_integer_environment_variable(name: str) -> int:
+    value = int(_required_environment_variable(name))
+    if value < 1:
+        raise ValueError(f"{name} must be a positive integer.")
+    return value
+
+
+def _project_path_environment_variable(name: str) -> Path:
+    configured_path = Path(_required_environment_variable(name))
+    return configured_path if configured_path.is_absolute() else PROJECT_ROOT / configured_path
+
+
+OLLAMA_SERVER_URL = _required_environment_variable("OLLAMA_SERVER_URL")
+MODEL_NAME = _required_environment_variable("OLLAMA_MODEL_NAME")
+OLLAMA_REQUEST_TIMEOUT_SECONDS = _positive_integer_environment_variable(
+    "OLLAMA_REQUEST_TIMEOUT_SECONDS"
+)
+OLLAMA_TEMPERATURE = float(_required_environment_variable("OLLAMA_TEMPERATURE"))
+OLLAMA_CONTEXT_WINDOW = _positive_integer_environment_variable("OLLAMA_CONTEXT_WINDOW")
+IPO_SEARCH_TERM = _required_environment_variable("IPO_SEARCH_TERM")
+IPO_MAX_SEARCH_RESULTS = _positive_integer_environment_variable(
+    "IPO_MAX_SEARCH_RESULTS"
+)
+SCRAPPED_PAGES_DIRECTORY = _project_path_environment_variable(
+    "IPO_HTML_SOURCE_DIRECTORY"
+)
+OUTPUT_CSV_FILE = _project_path_environment_variable("IPO_OUTPUT_CSV_FILE")
 logger.info(f"Ollama server URL: {OLLAMA_SERVER_URL}")
 logger.info(f"Model name: {MODEL_NAME}")

@@ -1,7 +1,6 @@
 import asyncio
 import json
 import logging
-import re
 from dataclasses import asdict
 from pathlib import Path
 
@@ -26,7 +25,11 @@ def save_research_results_as_json(research_results: dict,
     )
     serialized_research_results = {
         "crawled_pages": [
-            asdict(crawled_page)
+            {
+                key: value
+                for key, value in asdict(crawled_page).items()
+                if key != "html_content"
+            }
             for crawled_page in research_results["crawled_pages"]
         ],
     }

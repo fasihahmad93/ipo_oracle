@@ -40,7 +40,9 @@ dist/
 *.csv
 *.pdf
 *.xlsx
+.html
 *.txt
+!requirements.txt
 
 # OS / temp
 *.tmp

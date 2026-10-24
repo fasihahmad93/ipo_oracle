@@ -1,17 +1,16 @@
 import asyncio
 import logging
 
+import pandas as pd
+
 from src.web_crawling.run_research import (
     run_research_workflow,
-)
-
-from src.llm_orchestration.run_llm_orchestration import (
-    run_ipo_information_extraction_pipeline,
 )
 
 from src.consolidated_report.report_generator import (
     generate_consolidated_report,
 )
+from src.consolidated_report.config import IPO_MAX_SEARCH_RESULTS, IPO_SEARCH_TERM
 
 from src.cli.banner import display_cli_banner
 
@@ -21,18 +20,17 @@ logger = logging.getLogger(__name__)
 
 async def run_ipo_research_pipeline(
     search_term: str,
-    maximum_search_result_count: int = 2,
-) -> str:
+    maximum_search_result_count: int,
+) -> pd.DataFrame:
     """
     Run the complete IPO research pipeline.
 
     Pipeline:
         1. Search and crawl relevant IPO webpages.
-        2. Extract IPO information using the LLM.
-        3. Consolidate the extracted information into a final report.
+        2. Extract one consolidated IPO table from all crawled HTML tables.
 
     Returns:
-        The final consolidated IPO report as text.
+        The consolidated IPO DataFrame.
     """
 
     logger.info(
@@ -45,7 +43,7 @@ async def run_ipo_research_pipeline(
     # ---------------------------------------------------------
 
     logger.info(
-        "Step 1/3: Starting web research"
+        "Step 1/2: Starting web research"
     )
 
     research_output_file = await run_research_workflow(
@@ -63,29 +61,15 @@ async def run_ipo_research_pipeline(
     # ---------------------------------------------------------
 
     logger.info(
-        "Step 2/3: Starting IPO information extraction"
+        "Step 2/2: Starting consolidated IPO report generation"
     )
 
-    ipo_information_text = (
-        run_ipo_information_extraction_pipeline()
+    final_ipo_report = (
+        generate_consolidated_report()
     )
 
     logger.info(
-        "IPO information extraction completed"
-    )
-
-    # ---------------------------------------------------------
-    # Step 3: Consolidation
-    # ---------------------------------------------------------
-
-    logger.info(
-        "Step 3/3: Starting report consolidation"
-    )
-
-    final_ipo_report = generate_consolidated_report()
-
-    logger.info(
-        "IPO report consolidation completed"
+        "Consolidated IPO report generation completed"
     )
 
     logger.info(
@@ -112,12 +96,10 @@ def main() -> None:
         ),
     )
 
-    search_term = "IPO GMP"
-
     final_ipo_report = asyncio.run(
         run_ipo_research_pipeline(
-            search_term=search_term,
-            maximum_search_result_count=5,
+            search_term=IPO_SEARCH_TERM,
+            maximum_search_result_count=IPO_MAX_SEARCH_RESULTS,
         )
     )
 
