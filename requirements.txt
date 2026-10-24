@@ -1,0 +1,26 @@
+# Web crawling
+crawl4ai
+beautifulsoup4
+ddgs
+Markdown
+
+# Configuration
+PyYAML
+python-dotenv
+
+# LangChain / LangGraph
+langchain
+langchain-core
+langchain-ollama
+langgraph
+pydantic
+
+# Existing utilities / UI
+pandas
+tabulate
+streamlit
+pyfiglet
+rich
+
+# Testing
+pytest

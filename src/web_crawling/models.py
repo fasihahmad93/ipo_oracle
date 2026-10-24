@@ -16,3 +16,4 @@ class CrawledPage:
     markdown_content: str
     was_crawled_successfully: bool
     error_message: Optional[str] = None
+    html_content: str = ""

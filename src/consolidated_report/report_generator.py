@@ -1,85 +1,58 @@
-from __future__ import annotations
+"""Generate the final IPO report directly from saved crawl HTML tables."""
 
 import logging
+from pathlib import Path
 
-from src.helper.file_import import import_text, import_yaml
-from src.llm_orchestration.extraction.ollama_llm_client import OllamaLanguageModelClient
+import pandas as pd
 
-from .config import IPO_TEXT_FILE, MODEL_NAME, OLLAMA_SERVER_URL, OUTPUT_MARKDOWN_FILE, PROMPT_YAML_FILE
+from .config import (
+    MODEL_NAME,
+    OLLAMA_CONTEXT_WINDOW,
+    OLLAMA_REQUEST_TIMEOUT_SECONDS,
+    OLLAMA_SERVER_URL,
+    OLLAMA_TEMPERATURE,
+    OUTPUT_CSV_FILE,
+    SCRAPPED_PAGES_DIRECTORY,
+)
+from .ollama_client import OllamaLanguageModelClient
+from .table_ipo_report import generate_consolidated_ipo_dataframe
 
 logger = logging.getLogger(__name__)
 
 
 def get_llm_client() -> OllamaLanguageModelClient:
-    logger.info("[get_llm_client] Starting LLM client initialization")
-    
-    if not MODEL_NAME:
-        logger.error("[get_llm_client] MODEL_NAME or OLLAMA_MODEL_NAME not set in .env")
-        raise ValueError("MODEL_NAME or OLLAMA_MODEL_NAME is not set in the .env file.")
-
-    logger.debug(f"[get_llm_client] Creating Ollama client with model: {MODEL_NAME}")
-    client = OllamaLanguageModelClient(
+    """Create the configured local Ollama client."""
+    return OllamaLanguageModelClient(
         ollama_server_url=OLLAMA_SERVER_URL,
         ollama_model_name=MODEL_NAME,
+        request_timeout_seconds=OLLAMA_REQUEST_TIMEOUT_SECONDS,
+        temperature=OLLAMA_TEMPERATURE,
+        context_window=OLLAMA_CONTEXT_WINDOW,
     )
-    logger.info("[get_llm_client] LLM client initialized successfully")
-    return client
-
-
-def build_consolidation_prompt(ipo_text: str) -> str:
-    logger.info("[build_consolidation_prompt] Starting prompt construction")
-    logger.debug(f"[build_consolidation_prompt] IPO text length: {len(ipo_text)} characters")
-    
-    logger.debug(f"[build_consolidation_prompt] Loading prompt from: {PROMPT_YAML_FILE}")
-    prompt_config = import_yaml(str(PROMPT_YAML_FILE))
-    base_prompt = prompt_config.get("prompt", "")
-    logger.debug(f"[build_consolidation_prompt] Base prompt loaded, length: {len(base_prompt)} characters")
-    
-    final_prompt = f"{base_prompt}\n\nIPO_INFORMATION_TEXT:\n{ipo_text}\n"
-    logger.info(f"[build_consolidation_prompt] Prompt constructed successfully, total length: {len(final_prompt)} characters")
-    return final_prompt
 
 
 def generate_consolidated_report(
-    ipo_text_file: str | object = IPO_TEXT_FILE,
-    output_markdown_file: str | object = OUTPUT_MARKDOWN_FILE,
-) -> str:
-    logger.info("[generate_consolidated_report] Starting consolidated report generation")
-    
-    ipo_text_path = str(ipo_text_file)
-    logger.debug(f"[generate_consolidated_report] IPO text file path: {ipo_text_path}")
-    
-    if not __import__("pathlib").Path(ipo_text_path).exists():
-        logger.error(f"[generate_consolidated_report] IPO text file not found: {ipo_text_path}")
-        raise FileNotFoundError(f"IPO text file not found: {ipo_text_path}")
-    logger.info("[generate_consolidated_report] IPO text file found")
+    html_source_directory: str | Path = SCRAPPED_PAGES_DIRECTORY,
+    output_csv_file: str | Path = OUTPUT_CSV_FILE,
+    ollama_client: OllamaLanguageModelClient | None = None,
+    output_yaml_file: str | Path | None = None,
+) -> pd.DataFrame:
+    """Create and save the IPO table and its extracted source tables.
 
-    logger.info("[generate_consolidated_report] Reading IPO text from file")
-    ipo_text = import_text(ipo_text_path)
-    logger.debug(f"[generate_consolidated_report] IPO text loaded, content length: {len(ipo_text)} characters")
-    
-    logger.info("[generate_consolidated_report] Building consolidation prompt")
-    prompt = build_consolidation_prompt(ipo_text)
-    logger.debug("[generate_consolidated_report] Prompt built successfully")
-    
-    logger.info("[generate_consolidated_report] Initializing LLM client")
-    llm_client = get_llm_client()
-    logger.debug("[generate_consolidated_report] LLM client ready")
-    
-    logger.info("[generate_consolidated_report] Sending text generation request to Ollama")
-    report_markdown = llm_client.generate_text(prompt)
-    logger.info(f"[generate_consolidated_report] LLM generation complete, output length: {len(report_markdown)} characters")
-
-    output_path = __import__("pathlib").Path(output_markdown_file)
-    logger.debug(f"[generate_consolidated_report] Output markdown file path: {output_path}")
-    
-    logger.info("[generate_consolidated_report] Creating output directory")
+    The extracted source tables are written beside the CSV by default, using
+    the filename ``extracted_ipo_tables.yaml``.
+    """
+    logger.info("Generating consolidated IPO table from %s", html_source_directory)
+    output_path = Path(output_csv_file)
+    yaml_output_path = Path(output_yaml_file) if output_yaml_file else (
+        output_path.with_name("extracted_ipo_tables.yaml")
+    )
+    dataframe = generate_consolidated_ipo_dataframe(
+        html_source_directory,
+        ollama_client or get_llm_client(),
+        yaml_output_path,
+    )
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    logger.debug(f"[generate_consolidated_report] Output directory ready: {output_path.parent}")
-    
-    logger.info("[generate_consolidated_report] Writing consolidated report to file")
-    output_path.write_text(report_markdown, encoding="utf-8")
-    logger.info(f"[generate_consolidated_report] Report written successfully to: {output_path}")
-    
-    logger.info("[generate_consolidated_report] Consolidated report generation completed successfully")
-    return report_markdown
+    dataframe.to_csv(output_path, index=False)
+    logger.info("Saved %d IPO record(s) to %s", len(dataframe), output_path)
+    return dataframe
